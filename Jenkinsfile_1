@@ -17,7 +17,7 @@ pipeline {
                         echo "Currently in: ${pwd()}"
                         // Your commands in the specified directory
                         sh 'echo "Your build commands here"'
-                        sh 'cd /var/lib/jenkins/workspace/new/'
+                        sh 'cd /var/lib/jenkins/workspace/custom_workspace/'
                         sh './new.sh'
                         sh 'pwd'
                     }
