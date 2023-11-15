@@ -19,6 +19,7 @@ pipeline {
                         sh 'echo "Your build commands here"'
                         sh 'cd /var/lib/jenkins/workspace/new/'
                         sh './new.sh'
+                        sh 'pwd'
                     }
              }
         }
