@@ -11,14 +11,10 @@ pipeline {
                 }
             }
         }
-    }
-
-    post {
-        success {
-            echo 'Pipeline succeeded! Ready for further actions...'
-        }
-        failure {
-            echo 'Pipeline failed! Take corrective actions...'
+        stage ('run the sample script') {
+            steps {
+            sh './new.sh'
+             }
         }
     }
 }
