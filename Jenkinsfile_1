@@ -13,6 +13,7 @@ pipeline {
         }
         stage ('run the sample script') {
             steps {
+            sh 'cd /var/lib/jenkins/new/'
             sh './new.sh'
              }
         }
