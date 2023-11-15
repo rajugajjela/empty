@@ -13,8 +13,13 @@ pipeline {
         }
         stage ('run the sample script') {
             steps {
-            sh 'cd /var/lib/jenkins/workspace/new/'
-            sh './new.sh'
+            dir('/var/lib/jenkins/workspace/new/') {
+                        echo "Currently in: ${pwd()}"
+                        // Your commands in the specified directory
+                        sh 'echo "Your build commands here"'
+                        sh 'cd /var/lib/jenkins/workspace/new/'
+                        sh './new.sh'
+                    }
              }
         }
     }
