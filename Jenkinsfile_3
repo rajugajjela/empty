@@ -37,4 +37,12 @@ pipeline {
             }
         }
     }
+def getCommitter(changeSet) {
+    try {
+        return changeSet.committer.displayName
+    } catch (Exception e) {
+        echo "Unable to retrieve committer information."
+        return "Unknown"
+    }
+}
 }
