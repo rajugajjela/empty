@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Custom Workspace') {
+            steps {
+                // Use the 'ws' step to set a custom workspace for this stage
+                ws('/var/lib/jenkins/workspace/new/') {
+                    echo "Building in a custom workspace"
+                    echo "$Workspace"
+                    checkout poll: false, scm: scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/empty.git']])
+                }
+            }
+        }
+        stage ('run the sample script') {
+            steps {
+            dir('/var/lib/jenkins/workspace/new/') {
+                        echo "Currently in: ${pwd()}"
+                        sh './new.sh'
+                        sh 'pwd'
+                    }
+             }
+        }
+    }
+}
