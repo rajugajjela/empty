@@ -4,7 +4,7 @@ pipeline {
  {
     node {
         label  'temp'
-        customWorkspace '/var/lib/jenkins/workspace/new_custom_workspce'
+        customWorkspace '/var/lib/jenkins/workspace/first_custom_workspce'
     }
  }
         stages {
