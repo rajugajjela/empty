@@ -20,7 +20,6 @@ pipeline {
                 script {
                     if (currentBuild.changeSets.size() > 0) {
                         echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
-                        build 'real-build-job'
                     }
                     else {
                         echo 'Found no change sets'
