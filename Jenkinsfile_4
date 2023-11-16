@@ -17,11 +17,11 @@ pipeline {
         stage('Test') {
             when {
                 changeset '**/Example/**'
+                sh 'exit 1'
             }
             steps {
                 echo "Changes detected in example stage. Entering test stage."
                 sh 'echo "hello"'
-                sh 'exit 1'
             }
         }
     }
