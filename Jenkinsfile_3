@@ -20,15 +20,6 @@ pipeline {
                 script {
                     if (currentBuild.changeSets.size() > 0) {
                         echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
-                        def changeSets = currentBuild.changeSets
-
-                        // Print information about each changeset
-                        changeSets.each { changeSet ->
-                                echo "Changeset in ${changeSet.kind} from ${changeSet.committer.displayName}:"
-                                changeSet.items.each { item ->
-                                echo "  ${item.msg}"
-                                }
-                        }
                     }
                     else {
                         echo 'Found no change sets'
@@ -38,11 +29,3 @@ pipeline {
         }
     }
 }
-def getCommitter(changeSet) {
-    try {
-        return changeSet.committer.displayName
-    } catch (Exception e) {
-        echo "Unable to retrieve committer information."
-        return "Unknown"
-    }
- }
