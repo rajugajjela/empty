@@ -21,6 +21,7 @@ pipeline {
             steps {
                 echo "Changes detected in example stage. Entering test stage."
                 sh 'echo "hello"'
+                sh 'exit 1'
             }
         }
     }
