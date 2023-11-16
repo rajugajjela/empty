@@ -37,6 +37,7 @@ pipeline {
             }
         }
     }
+}
 def getCommitter(changeSet) {
     try {
         return changeSet.committer.displayName
@@ -44,5 +45,4 @@ def getCommitter(changeSet) {
         echo "Unable to retrieve committer information."
         return "Unknown"
     }
-}
-}
+ }
