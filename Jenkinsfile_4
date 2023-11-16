@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             when {
                 changeset '**/Example/**'
-                sh 'exit 1'
+                exit 1
             }
             steps {
                 echo "Changes detected in example stage. Entering test stage."
