@@ -15,4 +15,11 @@ pipeline {
             }
         }
     }
+        Stages {
+        stage ('file execution') {
+             steps { 
+                 sh './new.sh'
+            }
+        }
+    }
 }
