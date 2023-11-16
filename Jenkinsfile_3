@@ -15,11 +15,9 @@ pipeline {
             }
         }
         }
-        stages {
         stage('Example') {
             steps {
                 sh './new.sh'
             }
-        }
         }
 }
