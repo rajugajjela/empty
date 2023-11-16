@@ -16,10 +16,10 @@ pipeline {
         }
         }
         stages {
-        stage('test') {
-                steps {
-                    sh './new.sh'
-                }
+        stage('Example') {
+            steps {
+                sh './new.sh'
+            }
         }
         }
 }
