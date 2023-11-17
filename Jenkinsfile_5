@@ -10,28 +10,28 @@ pipeline {
             steps {
                 script {
                     def changes = checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
-            }
-                    if (changes.isEmpty()) {
-                        echo "No changes found. Exiting pipeline."
-                        currentBuild.result = 'SUCCESS'
-                        return
-                    } else {
-                        echo "Changes detected. Proceeding to the 'Build and Test' stage."
-                    }
                 }
+                    if (changes.isEmpty()) {
+                    echo 'No changes found. Exiting pipeline.'
+                    currentBuild.result = 'SUCCESS'
+                    return
+                    } else {
+                    echo "Changes detected. Proceeding to the 'Build and Test' stage."
+                    }
             }
+        }
         stage('Build and Test') {
             steps {
-                echo "Building and testing..."
-                // Add your build and test commands here
-                //comment
+                echo 'Building and testing...'
+            // Add your build and test commands here
+            //comment
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying..."
-                // Add your deployment commands here
+                echo 'Deploying...'
+            // Add your deployment commands here
             }
         }
     }
