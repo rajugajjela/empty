@@ -20,8 +20,6 @@ pipeline {
                     }
                 }
             }
-        }
-
         stage('Build and Test') {
             steps {
                 echo "Building and testing..."
