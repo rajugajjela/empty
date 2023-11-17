@@ -20,9 +20,7 @@ pipeline {
         stage('test') {
             steps {
                 sh 'echo "hello"'
-                script {
-                    echo "Poll SCM checking"
-                }
+                echo "Poll SCM checking"
             }
         }
     }
