@@ -1,30 +1,38 @@
 pipeline {
-        agent
- {
-        node {
-            label  'temp'
-            customWorkspace '/var/lib/jenkins/workspace/temp_custom_workspace'
-        }
- }
-  triggers {
-    cron('H */4 * * 1-5')
-}
-        stages {
-        stage('Example') {
+    agent any
+
+    triggers {
+        cron('H/2 * * * *') // Run every 5 minutes, adjust as needed
+    }
+
+    stages {
+        stage('Check for Changes') {
             steps {
-                sh 'echo $WORKSPACE'
-                @Library(value="mylib", changelog=false) 
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
+                script {
+                    def changes = changeset poll: true
+
+                    if (changes.isEmpty()) {
+                        echo "No changes found. Exiting pipeline."
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    } else {
+                        echo "Changes detected. Proceeding to the 'Build and Test' stage."
+                    }
+                }
             }
         }
-        stage('New') {
-            when {
-               expression {
-                   env.currentBuild.changeSets.isEmpty()
-               }        
-            }
+
+        stage('Build and Test') {
             steps {
-                echo 'Hello World'
+                echo "Building and testing..."
+                // Add your build and test commands here
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying..."
+                // Add your deployment commands here
             }
         }
     }
