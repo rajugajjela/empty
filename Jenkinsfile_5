@@ -19,7 +19,6 @@ pipeline {
 
                     if (changes == null || changes.isEmpty()) {
                         echo "No changes found. Skipping the 'test' stage."
-                        currentBuild.result = 'SUCCESS'
                         sh 'exit 1'
                     }
                 }
