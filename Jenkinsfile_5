@@ -20,7 +20,7 @@ pipeline {
         stage('New') {
             when {
                expression {
-                   !env.currentBuild.changeSets.isEmpty()
+                   env.currentBuild.changeSets.isEmpty()
                }        
             }
             steps {
