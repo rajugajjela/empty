@@ -7,7 +7,7 @@ pipeline {
     }
 
     triggers {
-        pollSCM('H/5 * * * *')
+        cron('H/2 * * * *')
     }
 
     stages {
@@ -16,11 +16,6 @@ pipeline {
                 script {
                     echo "Checking for changes..."
                     def changes = checkout(scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']]), poll: true)
-
-                    if (changes == null || changes.isEmpty()) {
-                        echo "No changes found. Skipping the 'test' stage."
-                        currentBuild.result = 'SUCCESS'
-                        return
                     }
                 }
             }
