@@ -26,6 +26,7 @@ pipeline {
                 echo 'Building and testing...'
             // Add your build and test commands here
             //comment
+            sh 'cat raju.txt'
             }
         }
 
