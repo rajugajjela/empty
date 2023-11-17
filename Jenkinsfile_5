@@ -1,0 +1,29 @@
+pipeline {
+        agent
+
+ {
+        node {
+            label  'temp'
+            customWorkspace '/var/lib/jenkins/workspace/temp_custom_workspace'
+        }
+ }
+  triggers {
+    cron('* * * * *')
+}
+        stages {
+        stage('Example') {
+            steps {
+                sh 'echo $WORKSPACE'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'echo "hello"'
+                script {
+                    echo "Poll SCM checking"
+                }
+            }
+        }
+    }
+}
