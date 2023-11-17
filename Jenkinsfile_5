@@ -1,27 +1,38 @@
 pipeline {
-        agent
-
- {
+    agent {
         node {
-            label  'temp'
+            label 'temp'
             customWorkspace '/var/lib/jenkins/workspace/temp_custom_workspace'
         }
- }
-  triggers {
-    cron('H/5 * * * *')
-}
-        stages {
+    }
+
+    triggers {
+        cron('H/5 * * * *')
+    }
+
+    stages {
         stage('Example') {
             steps {
-                sh 'echo $WORKSPACE'
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
+                script {
+                    echo "Checking for changes..."
+                    def changes = checkout(scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']]), poll: true)
+
+                    if (changes == null || changes.isEmpty()) {
+                        echo "No changes found. Skipping the 'test' stage."
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    }
+                }
             }
         }
+
         stage('test') {
             steps {
+                echo "Changes detected. Proceeding to the 'test' stage."
                 sh 'echo "hello"'
                 echo "Poll SCM checking"
             }
         }
     }
 }
+        
