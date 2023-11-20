@@ -8,7 +8,7 @@ pipeline {
         }
  }
 triggers {
-        pollSCM 'H/5 * * * *'
+        pollSCM 'H/2 * * * *'
     }
         stages {
         stage('Example') {
@@ -19,7 +19,6 @@ triggers {
         }
         stage('test') {
             steps {
-                sh 'echo "hello"'
                 script {
                     if (currentBuild.changeSets.size() > 0) {
                         echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
