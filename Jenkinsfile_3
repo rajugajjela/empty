@@ -24,7 +24,7 @@ triggers {
                         echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
                     }
                     else {
-                        echo 'Found no change sets'
+                        echo 'Found no change sets is done'
                     }
                 }
             }
