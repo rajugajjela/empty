@@ -11,6 +11,9 @@ pipeline {
         stage('Example') {
             steps {
                 sh 'echo $WORKSPACE'
+                script {
+                    properties([pipelineTriggers([pollSCM('')])])
+                }
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
             }
         }
