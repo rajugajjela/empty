@@ -19,7 +19,6 @@ triggers {
         }
         stage('test') {
             steps {
-                sh 'echo "hello"'
                 script {
                     if (currentBuild.changeSets.size() > 0) {
                         echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
