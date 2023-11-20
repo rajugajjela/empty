@@ -1,1 +1,34 @@
-Jenkinsfile_multi
+pipeline {
+        agent
+
+ {
+        node {
+            label  'temp'
+            customWorkspace '/var/lib/jenkins/workspace/multi_pipe_custom_workspce'
+        }
+ }
+triggers {
+        pollSCM 'H/5 * * * *'
+    }
+        stages {
+        stage('Example') {
+            steps {
+                sh 'echo $WORKSPACE'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'echo "hello"'
+                script {
+                    if (currentBuild.changeSets.size() > 0) {
+                        echo 'Found ' + currentBuild.changeSets.size() + ' change sets'
+                    }
+                    else {
+                        echo 'Found no change sets'
+                    }
+                }
+            }
+        }
+    }
+}
