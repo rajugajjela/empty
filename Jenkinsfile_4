@@ -1,4 +1,3 @@
-    def smoke_var
 pipeline {
     agent {
         node {
@@ -9,7 +8,10 @@ pipeline {
     parameters {
         choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
-
+    environment {
+        smoke_var= ''
+        var= ''
+    }
     stages {
 
         stage('Example1') {
@@ -41,15 +43,15 @@ pipeline {
                 script{
                      echo "Selected choice: ${params.Pick_a_Choice}"
                 sh """
-                    smoke_var=${params.Pick_a_Choice}
-                    var=hello
+                    env.smoke_var=${params.Pick_a_Choice}
+                    env.var=hello
                 """
 }
             }
         }
         stage('Example5') {
             steps {
-                    sh "echo ${param.smoke_var}"
+                    sh "echo ${env.smoke_var}"
                     sh "echo ${env.var}"
             }
         }
