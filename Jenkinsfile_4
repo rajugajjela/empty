@@ -31,7 +31,7 @@ pipeline {
                 script {
                     dir('vendor') {
                     echo "Current Workspace:${pwd()}"
-                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git3.git']])
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/opengrok_test.git']])
                 }
             }
         }
