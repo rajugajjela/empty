@@ -38,7 +38,6 @@ pipeline {
                      echo "Selected choice: ${params.Pick_a_Choice}"
                  sh """
                     smoke_var=${params.Pick_a_Choice}
-                    env.smoke_var=smoke_var
                     var=hello
                     """
             }
