@@ -1,40 +1,41 @@
 pipeline {
-    agent {
+    agent 
         node {
             label 'temp'
             customWorkspace '/var/lib/jenkins/workspace/MainWorkspace_Jenkins'
         }
+    parameters {
+        choice(choices: ['One', 'Two','Three'], description: 'What is your choice?', name: 'Pick_a_num')
     }
     stages {
         stage('Example1') {
             steps {
-                script {
                     dir('kernel') {
                     echo "Current Workspace:${pwd()}"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
                 }
             }
         }
-    }
        stage('Example2') {
             steps {
-                script {
                     dir('Qssi') {
                     echo "Current Workspace:${pwd()}"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git2.git']])
                 }
             }
         }
-    }
        stage('Example3') {
             steps {
-                script {
                     dir('vendor') {
                     echo "Current Workspace:${pwd()}"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/opengrok_test.git']])
                 }
             }
         }
+       stage('Example3') {
+            steps {
+                 echo "Selected choice: ${params.Pick_a_num}"
+            }
+        }
     }
-}
 }
