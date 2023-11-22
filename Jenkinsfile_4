@@ -42,13 +42,13 @@ pipeline {
                      echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var=${params.Pick_a_Choice}
                     var='hello'
-}
+                }
             }
         }
         stage('Example5') {
             steps {
-                    echo "$smoke_var"
-                    echo "$var"
+                    sh "echo $smoke_var"
+                    sh "echo $var"
             }
         }
     }
