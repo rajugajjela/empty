@@ -48,8 +48,8 @@ pipeline {
         stage('Example5') {
             steps {
                 script{
-                    sh "echo $smoke_var"
-                    sh "echo $MY_var"
+                    echo $smoke_var
+                    echo $MY_var
                 }
             }
         }
