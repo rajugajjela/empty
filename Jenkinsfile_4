@@ -2,26 +2,17 @@ pipeline {
     agent {
         node {
             label 'temp'
-            customWorkspace '/var/lib/jenkins/workspace/first_custom_workspace_Jenkins'
+            customWorkspace '/var/lib/jenkins/workspace/MainWorkspace_Jenkins'
         }
     }
     stages {
         stage('Example') {
             steps {
                 script {
+                    dir('/var/lib/jenkins/workspace/new/') {
+                    echo "Currently in: ${pwd()}"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
                 }
-            }
-        }
-
-        stage('Test') {
-            when {
-                changeset '**/Example/**'
-                exit 1
-            }
-            steps {
-                echo "Changes detected in example stage. Entering test stage."
-                sh 'echo "hello"'
             }
         }
     }
