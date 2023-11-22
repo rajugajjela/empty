@@ -44,8 +44,8 @@ pipeline {
         }
         stage('Example5') {
             steps {
-                    sh "echo $smoke_var"
-                    sh "echo $var"
+                    sh "echo ${env.smoke_var}"
+                    sh "echo ${env.var}"
             }
         }
     }
