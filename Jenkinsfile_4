@@ -8,10 +8,6 @@ pipeline {
     parameters {
         choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
- environment {
-     var=""
-     smoke_var=""
-   }
     stages {
         stage('Example1') {
             steps {
@@ -48,8 +44,8 @@ pipeline {
         }
         stage('Example5') {
             steps {
-                    sh "echo ${env.smoke_var}"
-                    sh "echo ${env.var}"
+                    sh "echo ${param.smoke_var}"
+                    sh "echo ${param.var}"
             }
         }
     }
