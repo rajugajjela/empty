@@ -8,10 +8,6 @@ pipeline {
     parameters {
         choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
- environment {
-     var="DEFAULT"
-     smoke_var="DEFAULT"
-   }
     stages {
         stage('Example1') {
             steps {
