@@ -42,10 +42,8 @@ pipeline {
             steps {
                 script{
                      echo "Selected choice: ${params.Pick_a_Choice}"
-                sh """
                     env.smoke_var=${params.Pick_a_Choice}
                     env.var=hello
-                """
 }
             }
         }
