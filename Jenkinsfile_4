@@ -1,5 +1,6 @@
 def smoke_var
 def MY_var
+def build_variant
 pipeline {
     agent {
         node {
@@ -42,6 +43,7 @@ pipeline {
                     echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var="${params.Pick_a_Choice}"
                     MY_var='hello'
+                    build_variant='user_debug'
                 }
             }
         }
@@ -49,6 +51,7 @@ pipeline {
             steps {
                     sh "echo $smoke_var"
                     sh "echo $MY_var"
+                    sh "echo $build_variant"
             }
         }
     }
