@@ -12,7 +12,7 @@ pipeline {
         stage('Example1') {
             steps {
                     dir('kernel') {
-                    echo "Current Workspace:${pwd()}"
+                    echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
                 }
             }
@@ -20,7 +20,7 @@ pipeline {
        stage('Example2') {
             steps {
                     dir('Qssi') {
-                    echo "Current Workspace:${pwd()}"
+                    echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git2.git']])
                 }
             }
@@ -28,7 +28,7 @@ pipeline {
        stage('Example3') {
             steps {
                     dir('vendor') {
-                    echo "Current Workspace:${pwd()}"
+                    echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/opengrok_test.git']])
                 }
             }
