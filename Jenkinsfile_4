@@ -41,7 +41,7 @@ pipeline {
                 script{
                      echo "Selected choice: ${params.Pick_a_Choice}"
                 sh """
-                    smoke_var=${params.Pick_a_Choice}
+                   def smoke_var=${params.Pick_a_Choice}
                     var=hello
                 """
 }
@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Example5') {
             steps {
-                    sh "echo ${smoke_var}"
+                    sh "echo ${param.smoke_var}"
                     sh "echo ${env.var}"
             }
         }
