@@ -41,7 +41,7 @@ pipeline {
                 script{
                     echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var1=${params.Pick_a_Choice}
-                    echo "variable is ${param.smoke_var1}"
+                    echo "variable is ${params.smoke_var1}"
                     MY_var='hello'
                 }
             }
