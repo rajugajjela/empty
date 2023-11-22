@@ -35,6 +35,7 @@ pipeline {
         }
        stage('Example4') {
             steps {
+                     echo "Selected choice: ${params.Pick_a_num}"
                  sh """
                     smoke_var=${params.Pick_a_Choice}
                     echo "smoke_var is $smoke_var"
