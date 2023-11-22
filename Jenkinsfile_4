@@ -43,6 +43,7 @@ pipeline {
                     smoke_var=${params.Pick_a_Choice}
                     var=hello
                     """
+def smoke_var=$smoke_var
             }
         }
         stage('Example5') {
