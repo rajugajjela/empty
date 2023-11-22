@@ -6,12 +6,36 @@ pipeline {
         }
     }
     stages {
-        stage('Example') {
+        stage('Example1') {
             steps {
                 script {
                     dir('kernel') {
                     echo "Current Workspace:${pwd()}"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
+                }
+            }
+        }
+    }
+}
+    stages {
+        stage('Example2') {
+            steps {
+                script {
+                    dir('Qssi') {
+                    echo "Current Workspace:${pwd()}"
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git2.git']])
+                }
+            }
+        }
+    }
+}
+    stages {
+        stage('Example3') {
+            steps {
+                script {
+                    dir('vendor') {
+                    echo "Current Workspace:${pwd()}"
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git3.git']])
                 }
             }
         }
