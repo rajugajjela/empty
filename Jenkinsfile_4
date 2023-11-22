@@ -8,7 +8,9 @@ pipeline {
     parameters {
         choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
+
     stages {
+    def smoke_var
         stage('Example1') {
             steps {
                     dir('kernel') {
@@ -44,7 +46,7 @@ pipeline {
         }
         stage('Example5') {
             steps {
-                    sh "echo ${env.smoke_var}"
+                    sh "echo ${smoke_var}"
                     sh "echo ${env.var}"
             }
         }
