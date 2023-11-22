@@ -6,7 +6,7 @@ pipeline {
         }
 }
     parameters {
-        choice(choices: ['One', 'Two','Three'], description: 'What is your choice?', name: 'Pick_a_num')
+        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
     stages {
         stage('Example1') {
@@ -35,7 +35,7 @@ pipeline {
         }
        stage('Example4') {
             steps {
-                 echo "Selected choice: ${params.Pick_a_num}"
+                 sh "echo ${params.Pick_a_Choice}"
             }
         }
     }
