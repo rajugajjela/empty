@@ -1,3 +1,4 @@
+    def smoke_var
 pipeline {
     agent {
         node {
@@ -10,7 +11,7 @@ pipeline {
     }
 
     stages {
-    def smoke_var
+
         stage('Example1') {
             steps {
                     dir('kernel') {
