@@ -16,9 +16,7 @@ pipeline {
             }
         }
     }
-}
-    stages {
-        stage('Example2') {
+       stage('Example2') {
             steps {
                 script {
                     dir('Qssi') {
@@ -28,9 +26,7 @@ pipeline {
             }
         }
     }
-}
-    stages {
-        stage('Example3') {
+       stage('Example3') {
             steps {
                 script {
                     dir('vendor') {
