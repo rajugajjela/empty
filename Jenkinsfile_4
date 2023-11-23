@@ -53,12 +53,6 @@ pipeline {
                     smoke_var="${params.Pick_a_Choice}"
                     MY_var='Hello'
                     build_variant='user_debug'
-                }
-            }
-        }
-        stage('Example5') {
-            steps {
-                script{
                     dir('kernel'){
                     echo "$Workspace"
                     fileContent = readFile 'output.txt'
@@ -69,6 +63,12 @@ pipeline {
                     variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
                     }
+                }
+            }
+        }
+        stage('Example5') {
+            steps {
+                script{
                     echo "$Workspace"
                     sh "echo $smoke_var"
                     sh "echo $MY_var"
