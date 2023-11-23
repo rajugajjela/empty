@@ -57,8 +57,6 @@ pipeline {
                     echo "$Workspace"
                     fileContent = readFile 'output.txt'
                     echo "Content of output.txt: ${fileContent}"
-                    variableFromOutputFile = fileContent.trim()
-                    echo "Variable from output.txt: ${variableFromOutputFile}"
                     match = (fileContent =~ /Variable=(\d+)/)
                     variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
