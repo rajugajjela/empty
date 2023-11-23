@@ -42,6 +42,7 @@ pipeline {
                 script{
                     echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var="${params.Pick_a_Choice}"
+                    dir('kernel') 
                     sh './simple.sh' > newfile.txt
                     MY_var=readfile('newfile.txt').trim
                     sh "echo ${myVar}"
