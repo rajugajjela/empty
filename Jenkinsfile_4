@@ -62,12 +62,14 @@ pipeline {
                     match = (fileContent =~ /Variable=(\d+)/)
                     variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
+                    echo "$Workspace"
                     }
                 }
             }
         }
         stage('Example5') {
             steps {
+                    echo "$Workspace"
                     sh "echo $smoke_var"
                     sh "echo $MY_var"
                     sh "echo $build_variant"
