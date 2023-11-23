@@ -63,8 +63,6 @@ pipeline {
                     if (match) {
                         variableValue = match[0][1].trim()
                         echo "Trimmed variable value: ${variableValue}"
-                        } else {
-                            echo "No match found for the variable pattern."
                         }
                     }
                 }
