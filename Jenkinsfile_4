@@ -4,7 +4,7 @@ def build_variant
 def scriptOutput
 def fileContent
 def variableFromOutputFile
-def changesVariable 
+def variableValue
 pipeline {
     agent {
         node {
@@ -58,8 +58,8 @@ pipeline {
                     echo "Content of output.txt: ${fileContent}"
                     variableFromOutputFile = fileContent.trim()
                     echo "Variable from output.txt: ${variableFromOutputFile}"
-                    changesVariable = (fileContent =~ /(\d+)/)[0][0].trim()
-                    echo "Trimmed variable: ${changesVariable}"
+                    def variableValue = (fileContent =~ /Variable=(\d+)/)[0][1]
+                    echo "Trimmed variable: ${variableValue}"
                     }
                 }
             }
