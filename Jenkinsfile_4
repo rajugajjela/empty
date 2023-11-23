@@ -2,6 +2,8 @@ def smoke_var
 def MY_var
 def build_variant
 def scriptOutput
+def fileContent
+def variableFromOutputFile
 pipeline {
     agent {
         node {
@@ -50,6 +52,11 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     echo "$Workspace"
+                    dir('kernel')
+                    fileContent = readFile 'output.txt'
+                    echo "Content of output.txt: ${fileContent}"
+                    variableFromOutputFile = fileContent.trim()
+                    echo "Variable from output.txt: ${variableFromOutputFile}"
                 }
             }
         }
