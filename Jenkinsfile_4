@@ -60,7 +60,13 @@ pipeline {
                     variableFromOutputFile = fileContent.trim()
                     echo "Variable from output.txt: ${variableFromOutputFile}"
                     match = (fileContent =~ /Variable=(\d+)/)
-                    echo "Match result: ${match}"
+                    if (match) {
+                        def variableValue = match[0][1].trim()
+                        echo "Trimmed variable value: ${variableValue}"
+                        echo "Using Trimmed Variable in the current stage: ${variableValue}"
+                        } else {
+                            echo "No match found for the variable pattern."
+                        }
                     }
                 }
             }
