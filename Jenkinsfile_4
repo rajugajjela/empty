@@ -18,7 +18,8 @@ pipeline {
                     dir('kernel') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
-                    sh './simple.sh' > newfile.txt
+                    def scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
+                    writeFile file: 'output.txt', text: scriptOutput
                 }
             }
         }
@@ -43,9 +44,7 @@ pipeline {
                 script{
                     echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var="${params.Pick_a_Choice}"
-                    dir('kernel') 
-                    MY_var=readfile('newfile.txt').trim
-                    sh "echo ${MY_var}"
+                    MY_var='Hello"
                     build_variant='user_debug'
                 }
             }
