@@ -58,6 +58,16 @@ pipeline {
         }
         stage('Example5') {
             steps {
+                    dir('kernel'){
+                    echo "$Workspace"
+                    fileContent = readFile 'output.txt'
+                    echo "Content of output.txt: ${fileContent}"
+                    variableFromOutputFile = fileContent.trim()
+                    echo "Variable from output.txt: ${variableFromOutputFile}"
+                    match = (fileContent =~ /Variable=(\d+)/)
+                    variableValue = match[0][1].trim()
+                    echo "Trimmed variable value: ${variableValue}"
+                    }
                     echo "$Workspace"
                     sh "echo $smoke_var"
                     sh "echo $MY_var"
