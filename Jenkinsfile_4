@@ -64,15 +64,5 @@ pipeline {
                 }
             }
         }
-        stage('Example5') {
-            steps {
-                script{
-                    echo "$Workspace"
-                    sh "echo $smoke_var"
-                    sh "echo $MY_var"
-                    sh "echo $build_variant"
-                }
-            }
-        }
     }
 }
