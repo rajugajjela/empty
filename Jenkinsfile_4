@@ -58,7 +58,7 @@ pipeline {
                     echo "Content of output.txt: ${fileContent}"
                     variableFromOutputFile = fileContent.trim()
                     echo "Variable from output.txt: ${variableFromOutputFile}"
-                    def variableValue = (fileContent =~ /Variable=(\d+)/)[0][1]
+                    variableValue = (fileContent =~ /Variable=(\d+)/)[0][1]
                     echo "Trimmed variable: ${variableValue}"
                     }
                 }
