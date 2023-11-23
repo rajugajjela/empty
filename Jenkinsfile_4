@@ -62,7 +62,6 @@ pipeline {
                     match = (fileContent =~ /Variable=(\d+)/)
                     variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
-                    echo "$Workspace"
                     }
                 }
             }
