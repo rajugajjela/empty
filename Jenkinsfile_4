@@ -58,8 +58,7 @@ pipeline {
                     fileContent = readFile 'output.txt'
                     echo "Content of output.txt: ${fileContent}"
                     match = (fileContent =~ /Variable=(\d+)/)
-                    echo "${match}"
-                    //variableValue = match[0][1].trim()
+                    variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
                     }
                 }
