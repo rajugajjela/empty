@@ -61,7 +61,7 @@ pipeline {
                     echo "Variable from output.txt: ${variableFromOutputFile}"
                     match = (fileContent =~ /Variable=(\d+)/)
                     if (match) {
-                        def variableValue = match[0][1].trim()
+                        variableValue = match[0][1].trim()
                         echo "Trimmed variable value: ${variableValue}"
                         echo "Using Trimmed Variable in the current stage: ${variableValue}"
                         } else {
