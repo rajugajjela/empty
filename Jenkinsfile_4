@@ -60,10 +60,8 @@ pipeline {
                     variableFromOutputFile = fileContent.trim()
                     echo "Variable from output.txt: ${variableFromOutputFile}"
                     match = (fileContent =~ /Variable=(\d+)/)
-                    if (match) {
-                        variableValue = match[0][1].trim()
-                        echo "Trimmed variable value: ${variableValue}"
-                        }
+                    variableValue = match[0][1].trim()
+                    echo "Trimmed variable value: ${variableValue}"
                     }
                 }
             }
