@@ -58,6 +58,7 @@ pipeline {
         }
         stage('Example5') {
             steps {
+                script{
                     dir('kernel'){
                     echo "$Workspace"
                     fileContent = readFile 'output.txt'
@@ -72,6 +73,7 @@ pipeline {
                     sh "echo $smoke_var"
                     sh "echo $MY_var"
                     sh "echo $build_variant"
+                }
             }
         }
     }
