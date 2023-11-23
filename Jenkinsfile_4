@@ -58,7 +58,7 @@ pipeline {
                     echo "Content of output.txt: ${fileContent}"
                     variableFromOutputFile = fileContent.trim()
                     echo "Variable from output.txt: ${variableFromOutputFile}"
-                    changesVariable = (fileContent =~ /Variable file\n(\d+)/)[0][1].trim()
+                    changesVariable = (fileContent =~ /(\d+)/)[0][0].trim()
                     echo "Trimmed 'changes' variable: ${changesVariable}"
                     }
                 }
