@@ -63,6 +63,7 @@ pipeline {
                     if (match) {
                         variableValue = match[0][1]
                         echo "Variable value: ${variableValue}"
+                        }
                     }
                 }
             }
