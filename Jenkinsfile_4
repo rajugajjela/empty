@@ -53,14 +53,18 @@ pipeline {
                     smoke_var="${params.Pick_a_Choice}"
                     MY_var='Hello'
                     build_variant='user_debug'
-                    dir('kernel'){
-                    echo "${Workspace}"
+                    dir('kernel') {
+                    echo "${Workspace}"  // Corrected the interpolation syntax
                     fileContent = readFile 'output.txt'
                     echo "Content of output.txt: ${fileContent}"
                     match = (fileContent =~ /Variable=(\d+)/)
+                    if (match) {
                     variableValue = match[0][1].trim()
                     echo "Trimmed variable value: ${variableValue}"
-                    }
+                    } else {
+                        echo "No match found for the variable pattern."
+                        }
+                    }    
                 }
             }
         }
