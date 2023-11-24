@@ -52,6 +52,7 @@ pipeline {
                     dir('kernel') {
                     scriptPath = "$Workspace/kernel/simple.sh"
                     sh ". ${scriptPath}"
+                    echo "$Variable"
                     myBuildId = env.Variable
                     echo "Value of My_Build_ID: ${myBuildId}"
                     echo "${env.Variable}"
