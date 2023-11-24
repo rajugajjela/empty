@@ -52,9 +52,7 @@ pipeline {
                     dir('kernel') {
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    yourVariableValue = sh(script: 'echo simple.sh', returnStdout: true).trim()
-                    echo "Value of YOUR_VARIABLE: ${yourVariableValue}"
-                    envVariableValue = "${env.YOUR_VARIABLE}"
+                    envVariableValue = env.My_Build_ID
                     echo "Environment variable value: ${envVariableValue}"
                     }    
                 }
