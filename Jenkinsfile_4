@@ -53,7 +53,7 @@ pipeline {
                     dir('kernel') {
                     sh '''
                             cd /var/lib/jenkins/workspace/MainWorkspace_Jenkins/kernel
-                            source simple.sh
+                            . simple.sh
                         '''
                     echo "$Variable"
                     myBuildId = env.Variable
