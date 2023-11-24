@@ -53,15 +53,14 @@ pipeline {
                     dir('kernel') {
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    withEnv(['My_Build_ID=1111']) {
-                        // Run the shell script and capture the output
-                        scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
-                    }
+                    scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
+
+                    // Print the script output
+                    echo "Shell script output: ${scriptOutput}"
+
+                    // Access the exported variable in the pipeline
                     myBuildId = env.My_Build_ID
                     echo "Value of My_Build_ID: ${myBuildId}"
-
-
-
                     }    
                 }
             }
