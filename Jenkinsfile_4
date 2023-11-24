@@ -5,7 +5,7 @@ def scriptOutput
 def fileContent
 def variableFromOutputFile
 def match
-def variableValue 
+def your_variable_value
 pipeline {
     agent {
         node {
@@ -24,8 +24,6 @@ pipeline {
                     dir('kernel') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
-                    scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
-                    writeFile file: 'output.txt', text: scriptOutput
                 }
                 }
             }
@@ -55,15 +53,10 @@ pipeline {
                     build_variant='user_debug'
                     dir('kernel') {
                     echo "${Workspace}"
-                    fileContent = readFile 'output.txt'
-                    echo "Content of output.txt: ${fileContent}"
-                    match = (fileContent =~ /Variable=(\d+)/)
-                    if (match) {
-                    variableValue = match[0][1].trim()
-                    echo "Trimmed variable value: ${variableValue}"
-                    } else {
-                        echo "No match found for the variable pattern."
-                        }
+                    scriptOutput = sh(script: './your_shell_script.sh', returnStdout: true).trim()
+                    echo "Shell script output: ${scriptOutput}"
+                    your_variable_value = scriptOutput.replaceAll("Variable value: ", "")
+                    echo "Extracted value of your_variable: ${your_variable_value}"
                     }    
                 }
             }
