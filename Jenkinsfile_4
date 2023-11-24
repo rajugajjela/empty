@@ -53,7 +53,7 @@ pipeline {
                     sh ". ./simple.sh"
                     myBuildId = env.My_Build_ID
                     echo "Value of My_Build_ID: ${myBuildId}"
-                    echo ${env.My_Build_ID}
+                    echo "${env.My_Build_ID}"
                     }    
                 }
             }
