@@ -1,10 +1,6 @@
 def smoke_var
 def MY_var
 def build_variant
-def scriptOutput
-def fileContent
-def variableFromOutputFile
-def match
 def your_variable_value
 pipeline {
     agent {
@@ -55,6 +51,8 @@ pipeline {
                     echo "${Workspace}"
                     sh "./simple.sh"
                     echo "${env.My_Build_ID}"
+                    yourVariableValue = sh(script: 'echo $My_Build_ID', returnStdout: true).trim()
+                    echo "Value of YOUR_VARIABLE: ${yourVariableValue}"
                     }    
                 }
             }
