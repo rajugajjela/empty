@@ -54,6 +54,7 @@ pipeline {
                     myBuildId = env.Variable
                     echo "Value of My_Build_ID: ${myBuildId}"
                     echo "${env.Variable}"
+                    echo $Variable
                     }    
                 }
             }
