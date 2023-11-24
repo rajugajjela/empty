@@ -52,7 +52,7 @@ pipeline {
                     build_variant='user_debug'
                     dir('kernel') {
                     sh '''
-                            cd kernel
+                            cd /var/lib/jenkins/workspace/MainWorkspace_Jenkins/kernel
                             source simple.sh
                         '''
                     echo "$Variable"
