@@ -50,9 +50,11 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     dir('kernel') {
+                     env.keySet().each { key ->
+                            echo "Environment variable: ${key}=${env[key]}"
+                    }
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    echo "${env.My_Build_ID}"
                     yourVariableValue = sh(script: 'echo $My_Build_ID', returnStdout: true).trim()
                     echo "Value of YOUR_VARIABLE: ${yourVariableValue}"
                     envVariableValue = "${env.YOUR_VARIABLE}"
