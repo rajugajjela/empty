@@ -51,7 +51,7 @@ pipeline {
                     dir('kernel') {
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    envVariableValue =echo  "${env.My_Build_ID}"
+                    envVariableValue =echo ${env.My_Build_ID}
                     echo "Environment variable value: ${envVariableValue}"
                     }    
                 }
