@@ -3,7 +3,7 @@ def MY_var
 def myBuildId
 def build_variant
 def your_variable_value
-def scriptOutput
+def scriptPath
 pipeline {
     agent {
         node {
@@ -50,7 +50,8 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     dir('kernel') {
-                    sh ". simple.sh"
+                    scriptPath = "${Worksace}/simple.sh"
+                    sh ". ${scriptPath}"
                     myBuildId = env.Variable
                     echo "Value of My_Build_ID: ${myBuildId}"
                     echo "${env.Variable}"
