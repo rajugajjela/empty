@@ -53,10 +53,7 @@ pipeline {
                     build_variant='user_debug'
                     dir('kernel') {
                     echo "${Workspace}"
-                    scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
-                    echo "Shell script output: ${scriptOutput}"
-                    your_variable_value = scriptOutput.replaceAll("Variable value: ", "")
-                    echo "Extracted value of your_variable: ${your_variable_value}"
+                    echo "${env.Build_ID}"
                     }    
                 }
             }
