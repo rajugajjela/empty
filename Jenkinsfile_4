@@ -1,6 +1,6 @@
 def smoke_var
 def MY_var
-def My_Build_ID
+def buildIDValue
 def build_variant
 def your_variable_value
 def envVariableValue
@@ -52,9 +52,11 @@ pipeline {
                     dir('kernel') {
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    echo $env.My_Build_ID
-                    envVariableValue =${env.My_Build_ID}
-                    echo "Environment variable value: ${envVariableValue}"
+                    echo "Environment variables:"
+                    sh 'env | sort'
+                    buildIDValue = env.My_Build_ID
+                    echo "Value of My_Build_ID: ${buildIDValue}"
+
                     }    
                 }
             }
