@@ -3,6 +3,7 @@ def MY_var
 def myBuildId
 def build_variant
 def your_variable_value
+def Variable
 def scriptPath
 pipeline {
     agent {
