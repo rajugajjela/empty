@@ -2,6 +2,7 @@ def smoke_var
 def MY_var
 def build_variant
 def your_variable_value
+def envVariableValue
 pipeline {
     agent {
         node {
@@ -53,6 +54,8 @@ pipeline {
                     echo "${env.My_Build_ID}"
                     yourVariableValue = sh(script: 'echo $My_Build_ID', returnStdout: true).trim()
                     echo "Value of YOUR_VARIABLE: ${yourVariableValue}"
+                    envVariableValue = env.YOUR_VARIABLE
+                    echo "Environment variable value: ${envVariableValue}"
                     }    
                 }
             }
