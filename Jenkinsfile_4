@@ -54,7 +54,7 @@ pipeline {
                     echo "${env.My_Build_ID}"
                     yourVariableValue = sh(script: 'echo $My_Build_ID', returnStdout: true).trim()
                     echo "Value of YOUR_VARIABLE: ${yourVariableValue}"
-                    envVariableValue = env.YOUR_VARIABLE
+                    envVariableValue = "${env.YOUR_VARIABLE}"
                     echo "Environment variable value: ${envVariableValue}"
                     }    
                 }
