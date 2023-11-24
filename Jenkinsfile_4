@@ -51,7 +51,10 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     dir('kernel') {
-                    sh "source simple.sh"
+                    sh '''
+                            cd kernel
+                            source simple.sh
+                        '''
                     echo "$Variable"
                     myBuildId = env.Variable
                     echo "Value of My_Build_ID: ${myBuildId}"
