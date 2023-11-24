@@ -53,6 +53,7 @@ pipeline {
                     build_variant='user_debug'
                     dir('kernel') {
                     echo "${Workspace}"
+                    sh "./simple.sh"
                     echo "${env.My_Build_ID}"
                     }    
                 }
