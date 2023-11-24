@@ -52,8 +52,6 @@ pipeline {
                     dir('kernel') {
                     echo "${Workspace}"
                     sh "./simple.sh"
-                    echo "Environment variables:"
-                    sh 'env | sort'
                     buildIDValue = env.My_Build_ID
                     echo "Value of My_Build_ID: ${buildIDValue}"
 
