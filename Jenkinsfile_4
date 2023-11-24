@@ -1,9 +1,10 @@
 def smoke_var
 def MY_var
-def buildIDValue
+def myBuildId
 def build_variant
 def your_variable_value
 def envVariableValue
+def scriptOutput
 pipeline {
     agent {
         node {
@@ -51,9 +52,11 @@ pipeline {
                     build_variant='user_debug'
                     dir('kernel') {
                     echo "${Workspace}"
-                    sh "./simple.sh"
-                    buildIDValue = env.My_Build_ID
-                    echo "Value of My_Build_ID: ${buildIDValue}"
+                    scriptOutput = sh(script: './simple.sh', returnStdout: true).trim()
+                    echo "Shell script output: ${scriptOutput}"
+                    myBuildId = env.My_Build_ID
+                    echo "Value of My_Build_ID: ${myBuildId}"
+
 
                     }    
                 }
