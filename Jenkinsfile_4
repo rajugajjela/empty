@@ -54,6 +54,7 @@ pipeline {
                     sh """
                     echo "export Variable=10" >text.sh
                     source $Workspace/kernel/text.sh
+                    printenv
                     echo $Variable
                     """
                     }    
