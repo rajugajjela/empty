@@ -53,10 +53,9 @@ pipeline {
                     dir('kernel') {
                     sh """
                     echo "export Variable=10" >text.sh
-                    . $Workspace/kernel/text.sh
+                    source $Workspace/kernel/text.sh
                     echo $Variable
                     """
-                    echo $Variable
                     }    
                 }
             }
