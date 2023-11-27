@@ -69,8 +69,8 @@ pipeline {
                     '''
             }
         }
-        stage("Example6'){
-            stage {
+        stage("Example6') {
+            steps {
                     sh '''
                     echo "Final variables"
                     source $WORKSPACE/text.sh
