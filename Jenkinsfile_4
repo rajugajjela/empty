@@ -69,7 +69,7 @@ pipeline {
                     '''
             }
         }
-        stage("Example6') {
+        stage('Example6') {
             steps {
                     sh '''
                     echo "Final variables"
