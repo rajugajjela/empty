@@ -51,7 +51,7 @@ pipeline {
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
                     echo "export var=10" >>$WORKSPACE/text.sh
                     echo "Before Source"
-                    source text.sh
+                    source $WORKSPACE/text.sh
                     echo "After source"
                     
                     echo $var
