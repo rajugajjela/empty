@@ -55,7 +55,7 @@ pipeline {
                     #!/bin/bash +x
                     echo "export var=10" >>text.sh
                     echo "Before Source"
-                    source $Workspace/kernel/text.sh
+                    source text.sh
                     echo "After source"
                     printenv
                     echo $var
