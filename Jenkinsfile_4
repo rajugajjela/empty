@@ -64,6 +64,7 @@ pipeline {
             steps {
                     sh '''
                     echo "export char='A'" >>text.sh
+                    echo "export currentBuild.number" >>text.sh
                     source $WORKSPACE/text.sh
                     echo $var
                     '''
