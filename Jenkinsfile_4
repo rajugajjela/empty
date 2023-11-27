@@ -64,7 +64,7 @@ pipeline {
             steps {
                     sh '''
                     echo "export char='A'" >>text.sh
-                    echo "$BUILD_NUMBER
+                    echo "$BUILD_NUMBER"
                     source $WORKSPACE/text.sh
                     echo $var
                     '''
