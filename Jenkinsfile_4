@@ -22,11 +22,10 @@ triggers {
 
         stage('Example1') {
             steps {
-                script{
                     dir('kernel') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: ['kernel/*'], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
-                }
+                 }
             }
         }
        stage('Example2') {
