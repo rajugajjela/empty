@@ -56,6 +56,7 @@ pipeline {
                     . $Workspace/kernel/text.sh
                     echo $Variable
                     """
+                    echo $Variable
                     }    
                 }
             }
