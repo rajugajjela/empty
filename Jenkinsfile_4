@@ -64,7 +64,7 @@ pipeline {
             steps {
                     sh '''
                     source $WORKSPACE/text.sh
-                    sh "echo $var"
+                    echo $var
                     '''
             }
         }
