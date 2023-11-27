@@ -53,6 +53,7 @@ pipeline {
                     dir('kernel') {
                     sh '''
                     #!/bin/bash +x
+                    echo "#!/bin/bash" > text.sh
                     echo "export var=10" >>text.sh
                     echo "Before Source"
                     source text.sh
