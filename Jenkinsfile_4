@@ -15,6 +15,9 @@ pipeline {
     parameters {
         choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
+triggers {
+        pollSCM 'H/2 * * * *'
+    }
     stages {
 
         stage('Example1') {
