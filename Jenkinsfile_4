@@ -63,10 +63,19 @@ pipeline {
          stage('Example5') {
             steps {
                     sh '''
+                    echo "export char='A'" >>text.sh
                     source $WORKSPACE/text.sh
                     echo $var
                     '''
             }
         }
+        stage("Example6'){
+            stage {
+                    sh '''
+                    echo "Final variables"
+                    source $WORKSPACE/text.sh
+                    echo $var
+                    echo $char
+                    '''
     }
 }
