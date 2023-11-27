@@ -51,12 +51,9 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     dir('kernel') {
-                    sh ". ./simple.sh"
-                    echo "$Variable"
-                    myBuildId = env.Variable
-                    echo "Value of My_Build_ID: ${myBuildId}"
-                    echo "${env.Variable}"
-                    sh "echo $Variable"
+                    sh """
+                    echo "export Variable=10" >text.sh
+                    """
                     }    
                 }
             }
