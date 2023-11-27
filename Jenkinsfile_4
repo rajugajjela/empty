@@ -51,15 +51,15 @@ pipeline {
                     MY_var='Hello'
                     build_variant='user_debug'
                     dir('kernel') {
-                    sh """
-                    #!/bin/bash
-                    echo "export Variable=10" >>text.sh
+                    sh '''
+                    #!/bin/bash +x
+                    echo "export var=10" >>text.sh
                     echo "Before Source"
                     source $Workspace/kernel/text.sh
                     echo "After source"
                     printenv
-                    echo ${Variable}
-                    """
+                    echo $var
+                    '''
                     }    
                 }
             }
