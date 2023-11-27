@@ -78,7 +78,6 @@ pipeline {
                     echo $var
                     echo $char
                     '''
-                    echo $var
             }
         }
     }
