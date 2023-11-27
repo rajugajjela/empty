@@ -17,6 +17,7 @@ pipeline {
     }
 triggers {
         pollSCM 'H/2 * * * *'
+        ignore('/var/lib/jenkins/workspace/MainWorkspace_Jenkins/kernel/*')
     }
     stages {
 
