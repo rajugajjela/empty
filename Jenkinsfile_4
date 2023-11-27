@@ -62,10 +62,10 @@ pipeline {
         }
          stage('Example5') {
             steps {
+                    sh '''
                     source $WORKSPACE/text.sh
                     sh "echo $var"
-                    sh "echo $ke_var"
-                    sh "echo $MY_var"
+                    '''
             }
         }
     }
