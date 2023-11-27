@@ -45,24 +45,19 @@ pipeline {
         }
        stage('Example4') {
             steps {
-                script{
-                    echo "Selected choice: ${params.Pick_a_Choice}"
-                    smoke_var="${params.Pick_a_Choice}"
-                    MY_var='Hello'
-                    build_variant='user_debug'
-                    dir('kernel') {
                     sh '''
                     #!/bin/bash +x
-                    echo "#!/bin/bash" > text.sh
-                    echo "export var=10" >>text.sh
+                    echo $WORKSPACE
+                    echo "#!/bin/bash" > $WORKSPACE/text.sh
+                    echo "export var=10" >>$WORKSPACE/text.sh
                     echo "Before Source"
                     source text.sh
                     echo "After source"
-                    printenv
+                    
                     echo $var
                     '''
-                    }    
-                }
+                   
+               
             }
         }
          stage('Example5') {
