@@ -5,80 +5,84 @@ def build_variant
 def your_variable_value
 def Variable
 def scriptPath
+
+def shouldPollExample1 = false  // Set to false to skip polling for Example1
+
 pipeline {
     agent {
         node {
             label 'temp'
             customWorkspace '/var/lib/jenkins/workspace/MainWorkspace_Jenkins'
         }
-}
-    parameters {
-        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
     }
-triggers {
-        pollSCM 'H/2 * * * *'
-    }
-    stages {
 
+    triggers {
+        cron('H/2 * * * *') // Poll every 2 hours or adjust as needed
+    }
+
+    stages {
         stage('Example1') {
+            when {
+                expression { shouldPollExample1 }
+            }
             steps {
-                    dir('kernel') {
+                dir('kernel') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git1.git']])
-                 }
+                }
             }
         }
-       stage('Example2') {
+
+        stage('Example2') {
             steps {
-                    dir('Qssi') {
+                dir('Qssi') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git2.git']])
                 }
             }
         }
-       stage('Example3') {
+
+        stage('Example3') {
             steps {
-                    dir('vendor') {
+                dir('vendor') {
                     echo "$Workspace"
                     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/opengrok_test.git']])
                 }
             }
         }
-       stage('Example4') {
+
+        stage('Example4') {
             steps {
-                    sh '''
-                    #!/bin/bash +x
-                    echo $WORKSPACE
-                    echo "#!/bin/bash" > $WORKSPACE/text.sh
-                    echo "export var=10" >>$WORKSPACE/text.sh
-                    echo "Before Source"
-                    source $WORKSPACE/text.sh
-                    echo "After source the var is"
-                    
-                    echo $var
-                    '''
-                   
-               
+                sh '''
+                echo "#!/bin/bash" > $WORKSPACE/text.sh
+                echo "export var=10" >>$WORKSPACE/text.sh
+                echo "Before Source"
+                source $WORKSPACE/text.sh
+                echo "After source the var is"
+                echo $var
+                '''
             }
         }
-         stage('Example5') {
+
+        stage('Example5') {
             steps {
-                    sh '''
-                    echo "export char='A'" >>text.sh
-                    echo "$BUILD_NUMBER"
-                    source $WORKSPACE/text.sh
-                    echo $var
-                    '''
+                sh '''
+                echo "export char='A'" >>text.sh
+                echo "$BUILD_NUMBER"
+                source $WORKSPACE/text.sh
+                echo $var
+                '''
             }
         }
+
         stage('Example6') {
             steps {
-                    sh '''
-                    echo "Final variables"
-                    source $WORKSPACE/text.sh
-                    echo $var
-                    echo $char
-                    '''
+                sh '''
+                echo "Final variables"
+                source $WORKSPACE/text.sh
+                echo $var
+                echo $char
+                '''
             }
         }
     }
