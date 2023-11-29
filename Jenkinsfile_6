@@ -29,5 +29,19 @@ triggers {
                 }
             }
         }
+         stage('Example4') {
+            steps {
+                    sh '''
+                    #!/bin/bash +x
+                    echo $WORKSPACE
+                    echo "#!/bin/bash" > $WORKSPACE/text.sh
+                    echo "export var=10" >>$WORKSPACE/text.sh
+                    echo "Before Source"
+                    source $WORKSPACE/text.sh
+                    echo "After source the var is"
+                    echo $var
+                    '''      
+            }
+        }
     }
 }
