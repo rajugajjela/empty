@@ -78,7 +78,7 @@ triggers {
                         script{
                             echo "Selected choice: ${params.Pick_a_Choice}"
                             smoke_var="${params.Pick_a_Choice}"
-                            sh 'echo $smoke_var'
+                            sh "echo $smoke_var"
                         }
                 }
         }
