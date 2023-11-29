@@ -7,7 +7,6 @@ triggers {
         stage('Example') {
             steps {
                 sh 'echo $WORKSPACE'
-                sh 'echo hello world'
             }
         }
   }
