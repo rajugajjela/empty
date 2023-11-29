@@ -72,8 +72,8 @@ triggers {
                     source $WORKSPACE/text.sh
                     echo $var
                     echo $char
-                    '''
                     echo $smoke_var
+                    '''
             }
         }
     }
