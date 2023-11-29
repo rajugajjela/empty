@@ -5,6 +5,9 @@ agent {
             customWorkspace '/var/lib/jenkins/workspace/Test2_Workspace'
         }
 }
+parameters {
+        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
+    }
 triggers {
         pollSCM 'H/2 * * * *'
     }
@@ -47,6 +50,8 @@ triggers {
                     echo "After source the var is"
                     echo $var
                     '''      
+                    echo "Selected choice: ${params.Pick_a_Choice}"
+                    smoke_var="${params.Pick_a_Choice}"
             }
         }
         stage('Example5') {
@@ -67,6 +72,7 @@ triggers {
                     echo $var
                     echo $char
                     '''
+                    echo $smoke_var
             }
         }
     }
