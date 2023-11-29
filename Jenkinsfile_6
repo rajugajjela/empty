@@ -1,3 +1,4 @@
+def smoke_var
 pipeline {
 agent {
         node {
