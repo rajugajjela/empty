@@ -49,5 +49,25 @@ triggers {
                     '''      
             }
         }
+        stage('Example5') {
+            steps {
+                    sh '''
+                    echo "export char='A'" >>text.sh
+                    echo "$BUILD_NUMBER"
+                    source $WORKSPACE/text.sh
+                    echo $var
+                    '''
+            }
+        }
+        stage('Example6') {
+            steps {
+                    sh '''
+                    echo "Final variables"
+                    source $WORKSPACE/text.sh
+                    echo $var
+                    echo $char
+                    '''
+            }
+        }
     }
 }
