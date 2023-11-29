@@ -49,10 +49,10 @@ triggers {
                     echo "Before Source"
                     source $WORKSPACE/text.sh
                     echo "After source the var is"
-                    echo $var
-                    '''      
+                    echo $var     
                     echo "Selected choice: ${params.Pick_a_Choice}"
                     smoke_var="${params.Pick_a_Choice}"
+                    '''
             }
         }
         stage('Example5') {
