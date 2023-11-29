@@ -69,13 +69,19 @@ triggers {
                     source $WORKSPACE/text.sh
                     echo $var
                     echo $char
-                    '''
-            }
-        }
-        stage('Example7') {
-                steps {
-                            echo "Selected choice: ${params.Pick_a_Choice}"
+                      '''
                 }
         }
-    }
+        stage('Example7') {
+            steps {
+                     echo "Selected choice: ${params.Pick_a_Choice}"
+            }
+        }
+        stage('Example8') {
+            steps {
+                        smoke_var="${params.Pick_a_Choice}"
+                        sh "echo $smoke_var"
+            }
+        }
+     }
 }
