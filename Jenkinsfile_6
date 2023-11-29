@@ -22,5 +22,13 @@ triggers {
                 }
             }
         }
+         stage('Example3') {
+         steps {
+                    dir('vendor') {
+                    echo "$Workspace"
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '290205a2-d519-45ae-90d3-0e23209e2c29', url: 'https://github.com/rajugajjela/git2.git']])
+                }
+            }
+        }
     }
 }
