@@ -75,9 +75,11 @@ triggers {
         }
         stage('Example7') {
                 steps {
-                    echo "Selected choice: ${params.Pick_a_Choice}"
-                    smoke_var="${params.Pick_a_Choice}"
-                    echo $smoke_var
+                        script{
+                            echo "Selected choice: ${params.Pick_a_Choice}"
+                            smoke_var="${params.Pick_a_Choice}"
+                            echo $smoke_var
+                        }
                 }
         }
     }
