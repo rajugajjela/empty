@@ -1,9 +1,5 @@
 pipeline {
-        agent
-
- {
-       
- }
+        agent any
 triggers {
         pollSCM 'H/2 * * * *'
     }
