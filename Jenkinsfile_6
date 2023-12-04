@@ -39,7 +39,7 @@ triggers {
         }
          stage('Example4') {
             steps {
-                    sh '''
+                    sh """
                     #!/bin/bash +x
                     echo $WORKSPACE
                     echo "${params.Pik_a_Choice}"
@@ -51,7 +51,7 @@ triggers {
                     source $WORKSPACE/text.sh
                     echo "After source the var is"
                     echo $var     
-                    '''
+                    """
             }
         }
         stage('Example5') {
