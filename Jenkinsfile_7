@@ -6,12 +6,12 @@ else
 	git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/tools/builds -b bt_qcs8250_LA2.0
     cd builds
 fi
-export PERMA_PATH=$WORKSPACE/builds/
+echo "export PERMA_PATH=$WORKSPACE/builds/" >$WORKSPACE/downstream.sh
 cd $WORSKPACE
 scp builduser@scmcdim:$PERMA_PATH/permalinks .
  
 LAST_SUCCESSFUL_BUILD=`grep -oP 'lastSuccessfulBuild \K\d+' permalinks`
- 
+
 echo "Last successful build is $LAST_SUCCESSFUL_BUILD"
  
 echo "Root workspace is $WORKSPACE"
@@ -101,13 +101,13 @@ then
         cd nonhlos
     fi
     git stash
-    export VENDOR_WORKSPACE_PATH=$WORKSPACE/vendor_build
+    echo "export VENDOR_WORKSPACE_PATH=$WORKSPACE/vendor_build" >>$WORKSPACE/downstream.sh
     chmod 777 build-qfil.sh
     ./build-qfil.sh
         if [ $? -eq 0 ]
 		then
         	echo "QFIL generation successful"
-            mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
+            	mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
        		curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T qfil-${BUILD_ID_NAME}.zip "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
        		if [ $? -eq 0 ]
 			then
@@ -127,22 +127,22 @@ cd $WORKSPACE/vendor_build/out/target/product/kona
 kversion=$(dd if=kernel bs=1 | zgrep -a 'Linux version')
 echo $kversion
 kversion=`echo $kversion |  grep -o 'Linux version.*' | tail -n +2 | grep -oE 'Linux version [0-9]+(\.[0-9]+)*' | grep -oP '(?<=Linux version )\d+(\.\d+)*'`
-echo $kversion
+echo "$kversion"
  
 cd $WORKSPACE
  
 BUILD_ID_NAME=`grep -oP '(?<=BUILD_ID=).*' $WORKSPACE/vendor_build/build/core/build_id.mk`
  
-export BUILD_VARIANT=userdebug
+echo "export BUILD_VARIANT=userdebug" >>$WORKSPACE/downstream.sh
  
-echo "platform_Build_num=$BUILD_NUMBER" > downstream.txt
+echo "export platform_Build_num=$BUILD_NUMBER"  >>$WORKSPACE/downstream.sh
  
-echo "Smoke_available=$Smoke_available" >> downstream.txt
+echo "export Smoke_available=$Smoke_available"  >>$WORKSPACE/downstream.sh
  
-echo "BUILD_ID_NAME=$BUILD_ID_NAME" >> downstream.txt
+echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
  
-echo "BUILD_VARIANT=$BUILD_VARIANT" >> downstream.txt
+echo "export BUILD_VARIANT=$BUILD_VARIANT"  >>$WORKSPACE/downstream.sh
  
-echo "kversion=$kversion" >> downstream.txt
+echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
  
-echo "LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD" >> downstream.txt
+echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
