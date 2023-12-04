@@ -161,8 +161,6 @@ triggers {
 
                 echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
 
-                echo "export BUILD_VARIANT=$BUILD_VARIANT"  >>$WORKSPACE/downstream.sh
-
                 echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
 
                 echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
@@ -171,10 +169,13 @@ triggers {
         }
         stage('Example8') {
             steps {
-                script {
-                        smoke_var="${params.Pick_a_Choice}"
-                        sh "echo $smoke_var"
-                        }
+                echo $BUILD_NUMBER
+                echo $QFIL_need
+                echo $Smoke_available
+                echo $BUILD_ID_NAME
+                echo $BUILD_VARIANT
+                echo $kversion
+                echo $LAST_SUCCESSFUL_BUILD
                 }
         }
     }
