@@ -169,6 +169,7 @@ triggers {
         }
         stage('Example8') {
             steps {
+                source $WORKSPACE/downstream.sh
                 echo $BUILD_NUMBER
                 echo $QFIL_need
                 echo $Smoke_available
