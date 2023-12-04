@@ -39,6 +39,7 @@ triggers {
         }
          stage('Example4') {
             steps {
+                script{
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
@@ -51,6 +52,7 @@ triggers {
                     echo "After source the var is"
                     echo $var     
                     '''
+                }
             }
         }
         stage('Example5') {
