@@ -41,13 +41,13 @@ triggers {
             steps {
                     script{
                     echo "Selected choice: ${params.Pick_a_Choice}"
-                    smoke_var="${params.Pick_a_Choice}"
+                    def smoke_var="${params.Pick_a_Choice}"
                         }
                     echo "$params.Pick_a_Choice"
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
-                    echo "${params.Pick_a_Choice}"
+                    echo $params.Pick_a_Choice
                     echo $smoke_var
                     export var=10
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
