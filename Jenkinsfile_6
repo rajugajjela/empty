@@ -39,6 +39,8 @@ triggers {
         }
          stage('Example4') {
             steps {
+                    print params.Pick_a_Choice
+                    sh "echo $params.Pick_a_Choice"
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
