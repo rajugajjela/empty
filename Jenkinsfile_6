@@ -79,7 +79,7 @@ triggers {
             steps {
                         print params.Pick_a_Choice
                         sh """echo $params.Pick_a_Choice"""
-                        echo $Smoke_var
+                        echo $smoke_var
                         echo $QFIL_need
                         echo $char
             }
