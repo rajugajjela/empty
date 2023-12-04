@@ -77,11 +77,13 @@ triggers {
         }
         stage('Example7') {
             steps {
+                        sh '''
                         print params.Pick_a_Choice
                         sh """echo $params.Pick_a_Choice"""
                         echo $smoke_var
                         echo $QFIL_need
                         echo $char
+                        '''
             }
         }
      }
