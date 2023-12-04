@@ -14,6 +14,7 @@ triggers {
         stages {
         stage('Platform') {
             steps {
+                sh """
                 sh 'echo $WORKSPACE'
                 if [ -d builds ]
                 then
@@ -153,7 +154,7 @@ triggers {
 
                 echo "export platform_Build_num=$BUILD_NUMBER"  >>$WORKSPACE/downstream.sh
 
-                echo "export Smoke_available=$Smoke_available"  >>$WORKSPACE/downstream.sh
+                echo "export Smoke_available="${params.Pick_a_Choice}"  >>$WORKSPACE/downstream.sh
 
                 echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
 
@@ -162,7 +163,7 @@ triggers {
                 echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
 
                 echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
-
+                """
             }
         }
     }
