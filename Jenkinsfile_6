@@ -78,7 +78,6 @@ triggers {
         stage('Example7') {
             steps {
                         sh '''
-                        source  $WORKSPACE/text.sh
                         echo $smoke_var
                         echo $QFIL_need
                         echo $char
