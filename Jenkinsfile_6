@@ -47,6 +47,7 @@ triggers {
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
                     echo "export var=10" >>$WORKSPACE/text.sh
                     echo "export smoke_var=$Pick_a_Choice" >>$WORKSPACE/text.sh
+                    echo "export smoke_var=$QFIL_need" >>$WORKSPACE/text.sh
                     echo "Before Source"
                     source $WORKSPACE/text.sh
                     echo "After source the var is"
