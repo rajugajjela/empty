@@ -167,7 +167,7 @@ triggers {
                 """
             }
         }
-        stage('Example8') {
+        stage('Variable_Test') {
             steps {
                 source $WORKSPACE/downstream.sh
                 echo $BUILD_NUMBER
