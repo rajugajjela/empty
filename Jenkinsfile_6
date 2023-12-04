@@ -78,10 +78,8 @@ triggers {
         }
         stage('Example8') {
             steps {
-                script {
                         smoke_var="${params.Pick_a_Choice}"
                         sh "echo $smoke_var"
-                }
             }
         }
      }
