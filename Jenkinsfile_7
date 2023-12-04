@@ -1,148 +1,169 @@
-if [ -d builds ]
-then
-	cd builds
-    git pull
-else
-	git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/tools/builds -b bt_qcs8250_LA2.0
-    cd builds
-fi
-echo "export PERMA_PATH=$WORKSPACE/builds/" >$WORKSPACE/downstream.sh
-cd $WORSKPACE
-scp builduser@scmcdim:$PERMA_PATH/permalinks .
- 
-LAST_SUCCESSFUL_BUILD=`grep -oP 'lastSuccessfulBuild \K\d+' permalinks`
+pipeline {
+agent {
+        node {
+            label 'temp'
+            customWorkspace '/var/lib/jenkins/workspace/Dummy_Workspace'
+        }
+}
+parameters {
+        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
+}
+triggers {
+        pollSCM 'H/2 * * * *'
+}
+        stages {
+        stage('Platform') {
+            steps {
+                sh 'echo $WORKSPACE'
+                if [ -d builds ]
+                then
+                    cd builds
+                    git pull
+                else
+                    git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/tools/builds -b bt_qcs8250_LA2.0
+                    cd builds
+                fi
+                echo "export PERMA_PATH=$WORKSPACE/builds/" >$WORKSPACE/downstream.sh
+                cd $WORSKPACE
+                scp builduser@scmcdim:$PERMA_PATH/permalinks .
 
-echo "Last successful build is $LAST_SUCCESSFUL_BUILD"
- 
-echo "Root workspace is $WORKSPACE"
-echo "Kernel workspace is $WORKSPACE/kernel_sync"
-echo "Vendor workspace is $WORKSPACE/vendor_sync"
-echo "QSSI workspace is $WORKSPACE/qssi_sync"
-echo "Vendor build workspace is $WORKSPACE/vendor_build"
-cd $WORKSPACE/builds
-./Jenkins-QCS8250_LA2.0.sh -H=$WORKSPACE -V=$WORKSPACE/vendor_sync -Q=$WORKSPACE/qssi_sync -K=$WORKSPACE/kernel_sync -B=$WORKSPACE/vendor_build -T=userdebug
- 
-if [ $? -eq 0 ]
-then
-   	echo "Build script ran successfully"
-else
-   	echo "Build script execution failed, please check log for more info"
-   	exit 1
-fi
- 
-echo "Copying the flash_all.sh & flash_all.bat to images directory"
- 
-cp $WORKSPACE/builds/flash_all_LA2.0.bat $WORKSPACE/builds/flash_all_LA2.0.sh $WORKSPACE/vendor_build/out/target/product/kona/
- 
-if [ $? -eq 0 ]
-then
-        echo "Copying the flash.sh & flash.bat files successfull"
-else
-        echo "Copying the flash.sh & flash.bat files failed.. exiting..."
-        exit 1
-fi
-echo "********************************Build completed successfully***********************************************"
- 
-cd $WORKSPACE/vendor_build/out/target/product/kona/
- 
-echo "========Generating the required images into tar file=========="
-BUILD_ID_NAME=`grep -oP '(?<=BUILD_ID=).*' $WORKSPACE/vendor_build/build/core/build_id.mk`
-tar -cvzf $BUILD_ID_NAME.tar.gz *.img abl.elf flash_all_LA2.0.bat flash_all_LA2.0.sh
- 
-if [ $? -eq 0 ]
-then
-        echo "Creating the tar file of images is successfull"
-else
-        echo "Creating the tar file of images failed,exiting..."
-        exit 1
-fi
-echo "=============Generating the tar file completed=============="
- 
-echo "=================Deploying to artifactory=================="
- 
-curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T *.tar.gz "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
- 
-if [ $? -eq 0 ]
-then
-        echo "Images uploaded to artifactory successfully"
-else
-        echo "Images upload to artifactory failed.. exiting..."
-        exit 1
-fi
- 
-echo "=================Deploying to artifactory completed======================"
- 
- 
-if [ $QFIL_need == 'Yes' ]
-then 
-	cd $WORKSPACE/vendor_build
-	pwd
-    if [ -d nonhlos ]
-	then
-     	cd nonhlos
-       	git checkout bt_qcs8250_la2.0
-        git pull
-        if [ $? -eq 0 ]
-		then
-			echo "Latest code changes pulled successfully into nonhlos"
-		else
-			echo "git pull failure for nonhlos"
-			exit 1
-		fi
-    else
-       	git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/qccc/nonhlos -b bt_qcs8250_la2.0
-		if [ $? -eq 0 ]
-		then
-			echo "git clone successfull for nonhlos"
-		else
-			echo "git clone failure for nonhlos"
-			exit 1
-		fi
-        cd nonhlos
-    fi
-    git stash
-    echo "export VENDOR_WORKSPACE_PATH=$WORKSPACE/vendor_build" >>$WORKSPACE/downstream.sh
-    chmod 777 build-qfil.sh
-    ./build-qfil.sh
-        if [ $? -eq 0 ]
-		then
-        	echo "QFIL generation successful"
-            	mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
-       		curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T qfil-${BUILD_ID_NAME}.zip "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
-       		if [ $? -eq 0 ]
-			then
-       			echo "QFIL zip copied to Artifactory"
-       		else
-       			echo "QFIL zip copying failure"
-           		exit 1
-       		fi
-        else
-        	echo "QFIL generation failure"
-        	exit 1
-        fi
-fi
- 
-cd $WORKSPACE/vendor_build/out/target/product/kona
- 
-kversion=$(dd if=kernel bs=1 | zgrep -a 'Linux version')
-echo $kversion
-kversion=`echo $kversion |  grep -o 'Linux version.*' | tail -n +2 | grep -oE 'Linux version [0-9]+(\.[0-9]+)*' | grep -oP '(?<=Linux version )\d+(\.\d+)*'`
-echo "$kversion"
- 
-cd $WORKSPACE
- 
-BUILD_ID_NAME=`grep -oP '(?<=BUILD_ID=).*' $WORKSPACE/vendor_build/build/core/build_id.mk`
- 
-echo "export BUILD_VARIANT=userdebug" >>$WORKSPACE/downstream.sh
- 
-echo "export platform_Build_num=$BUILD_NUMBER"  >>$WORKSPACE/downstream.sh
- 
-echo "export Smoke_available=$Smoke_available"  >>$WORKSPACE/downstream.sh
- 
-echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
- 
-echo "export BUILD_VARIANT=$BUILD_VARIANT"  >>$WORKSPACE/downstream.sh
- 
-echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
- 
-echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
+                LAST_SUCCESSFUL_BUILD=`grep -oP 'lastSuccessfulBuild \K\d+' permalinks`
+
+                echo "Last successful build is $LAST_SUCCESSFUL_BUILD"
+
+                echo "Root workspace is $WORKSPACE"
+                echo "Kernel workspace is $WORKSPACE/kernel_sync"
+                echo "Vendor workspace is $WORKSPACE/vendor_sync"
+                echo "QSSI workspace is $WORKSPACE/qssi_sync"
+                echo "Vendor build workspace is $WORKSPACE/vendor_build"
+                cd $WORKSPACE/builds
+                ./Jenkins-QCS8250_LA2.0.sh -H=$WORKSPACE -V=$WORKSPACE/vendor_sync -Q=$WORKSPACE/qssi_sync -K=$WORKSPACE/kernel_sync -B=$WORKSPACE/vendor_build -T=userdebug
+
+                if [ $? -eq 0 ]
+                then
+                    echo "Build script ran successfully"
+                else
+                    echo "Build script execution failed, please check log for more info"
+                    exit 1
+                fi
+
+                echo "Copying the flash_all.sh & flash_all.bat to images directory"
+
+                cp $WORKSPACE/builds/flash_all_LA2.0.bat $WORKSPACE/builds/flash_all_LA2.0.sh $WORKSPACE/vendor_build/out/target/product/kona/
+
+                if [ $? -eq 0 ]
+                then
+                        echo "Copying the flash.sh & flash.bat files successfull"
+                else
+                        echo "Copying the flash.sh & flash.bat files failed.. exiting..."
+                        exit 1
+                fi
+                echo "********************************Build completed successfully***********************************************"
+
+                cd $WORKSPACE/vendor_build/out/target/product/kona/
+
+                echo "========Generating the required images into tar file=========="
+                BUILD_ID_NAME=`grep -oP '(?<=BUILD_ID=).*' $WORKSPACE/vendor_build/build/core/build_id.mk`
+                tar -cvzf $BUILD_ID_NAME.tar.gz *.img abl.elf flash_all_LA2.0.bat flash_all_LA2.0.sh
+
+                if [ $? -eq 0 ]
+                then
+                        echo "Creating the tar file of images is successfull"
+                else
+                        echo "Creating the tar file of images failed,exiting..."
+                        exit 1
+                fi
+                echo "=============Generating the tar file completed=============="
+
+                echo "=================Deploying to artifactory=================="
+
+                curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T *.tar.gz "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
+
+                if [ $? -eq 0 ]
+                then
+                        echo "Images uploaded to artifactory successfully"
+                else
+                        echo "Images upload to artifactory failed.. exiting..."
+                        exit 1
+                fi
+
+                echo "=================Deploying to artifactory completed======================"
+
+                if [ $QFIL_need == 'Yes' ]
+                then
+                    cd $WORKSPACE/vendor_build
+                    pwd
+                    if [ -d nonhlos ]
+                    then
+                        cd nonhlos
+                        git checkout bt_qcs8250_la2.0
+                        git pull
+                        if [ $? -eq 0 ]
+                        then
+                            echo "Latest code changes pulled successfully into nonhlos"
+                        else
+                            echo "git pull failure for nonhlos"
+                            exit 1
+                        fi
+                    else
+                        git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/qccc/nonhlos -b bt_qcs8250_la2.0
+                        if [ $? -eq 0 ]
+                        then
+                            echo "git clone successfull for nonhlos"
+                        else
+                            echo "git clone failure for nonhlos"
+                            exit 1
+                        fi
+                        cd nonhlos
+                    fi
+                    git stash
+                    echo "export VENDOR_WORKSPACE_PATH=$WORKSPACE/vendor_build" >>$WORKSPACE/downstream.sh
+                    chmod 777 build-qfil.sh
+                    ./build-qfil.sh
+                        if [ $? -eq 0 ]
+                        then
+                            echo "QFIL generation successful"
+                                mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
+                            curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T qfil-${BUILD_ID_NAME}.zip "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
+                            if [ $? -eq 0 ]
+                            then
+                                echo "QFIL zip copied to Artifactory"
+                            else
+                                echo "QFIL zip copying failure"
+                                exit 1
+                            fi
+                        else
+                            echo "QFIL generation failure"
+                            exit 1
+                        fi
+                fi
+
+                cd $WORKSPACE/vendor_build/out/target/product/kona
+
+                kversion=$(dd if=kernel bs=1 | zgrep -a 'Linux version')
+                echo $kversion
+                kversion=`echo $kversion |  grep -o 'Linux version.*' | tail -n +2 | grep -oE 'Linux version [0-9]+(\.[0-9]+)*' | grep -oP '(?<=Linux version )\d+(\.\d+)*'`
+                echo "$kversion"
+
+                cd $WORKSPACE
+
+                BUILD_ID_NAME=`grep -oP '(?<=BUILD_ID=).*' $WORKSPACE/vendor_build/build/core/build_id.mk`
+
+                echo "export BUILD_VARIANT=userdebug" >>$WORKSPACE/downstream.sh
+
+                echo "export platform_Build_num=$BUILD_NUMBER"  >>$WORKSPACE/downstream.sh
+
+                echo "export Smoke_available=$Smoke_available"  >>$WORKSPACE/downstream.sh
+
+                echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
+
+                echo "export BUILD_VARIANT=$BUILD_VARIANT"  >>$WORKSPACE/downstream.sh
+
+                echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
+
+                echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
+
+            }
+        }
+    }
+}
