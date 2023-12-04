@@ -1,8 +1,8 @@
 pipeline {
 agent {
         node {
-            label 'temp'
-            customWorkspace '/var/lib/jenkins/workspace/Dummy_Workspace'
+            label 'ponderous2'
+            customWorkspace '/home/people/jenkin-jobs/AU_Platform_build_la2.0'
         }
 }
 parameters {
@@ -155,7 +155,9 @@ triggers {
 
                 echo "export platform_Build_num=$BUILD_NUMBER"  >>$WORKSPACE/downstream.sh
 
-                echo "export Smoke_available="${params.Pick_a_Choice}"  >>$WORKSPACE/downstream.sh
+                echo "export QFIL_need=$QFIL_need"  >>$WORKSPACE/downstream.sh
+
+                echo "export Smoke_available="$Pick_a_Choice"  >>$WORKSPACE/downstream.sh
 
                 echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
 
