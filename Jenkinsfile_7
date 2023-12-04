@@ -125,7 +125,7 @@ triggers {
                         if [ $? -eq 0 ]
                         then
                             echo "QFIL generation successful"
-                                mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
+                            mv qfil-userdebug-${BUILD_NUMBER}.zip qfil-$BUILD_ID_NAME.zip
                             curl -k -H 'X-JFrog-Art-Api: AKCp5aTSCz3H2G1hix6JWsr4UQ9Vy1aWx1PQhAT8JNc4sDr4KKCXqaRuZp5HUiwALZ55SFbY6' -T qfil-${BUILD_ID_NAME}.zip "https://cdartifacts.innominds.com/artifactory/Android_Kernel_Upgrade_builds/Debug/$BUILD_NUMBER/"
                             if [ $? -eq 0 ]
                             then
