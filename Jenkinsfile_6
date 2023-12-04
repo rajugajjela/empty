@@ -41,6 +41,7 @@ triggers {
             steps {
                     sh '''
                     #!/bin/bash +x
+                    echo $Pick_a_Choice
                     echo $WORKSPACE
                     echo "${params.Pik_a_Choice}"
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
