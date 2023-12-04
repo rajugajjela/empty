@@ -42,6 +42,7 @@ triggers {
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
+                    echo "${params.Pik_a_Choice}"
                     echo "person : ${params.Pick_a_Choice}"
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
                     echo "export var=10" >>$WORKSPACE/text.sh
