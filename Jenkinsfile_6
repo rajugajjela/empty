@@ -40,7 +40,7 @@ triggers {
          stage('Example4') {
             steps {
                     print params.Pick_a_Choice
-                    sh "echo $params.Pick_a_Choice"
+                    sh "echo "export smoke_var=$params.Pick_a_Choice" > $WORKSPACE/text.sh"
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
