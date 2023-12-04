@@ -1,4 +1,4 @@
-_pipeline {
+pipeline {
 agent {
         node {
             label 'temp'
