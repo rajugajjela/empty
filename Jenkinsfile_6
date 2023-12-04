@@ -77,7 +77,7 @@ triggers {
         stage('Example7') {
             steps {
                         print params.Pick_a_Choice
-                        sh '''echo $params.Pick_a_Choice'''
+                        sh """echo $params.Pick_a_Choice"""
             }
         }
      }
