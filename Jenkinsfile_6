@@ -39,10 +39,6 @@ triggers {
         }
          stage('Example4') {
             steps {
-                    script{
-                    echo "Selected choice: ${params.Pick_a_Choice}"
-                    env.smoke_var=params.Pick_a_Choice
-                        }
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
