@@ -46,7 +46,7 @@ triggers {
                     sh '''
                     #!/bin/bash +x
                     echo $WORKSPACE
-                    echo $env.smoke_var
+                    echo "person : ${params.Pick_a_Choice}"
                     echo "#!/bin/bash" > $WORKSPACE/text.sh
                     echo "export var=10" >>$WORKSPACE/text.sh
                     echo "export smoke_var=$params.Pick_a_Choice" >>$WORKSPACE/text.sh
