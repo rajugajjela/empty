@@ -6,25 +6,38 @@ agent {
         }
 }
 parameters {
-        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Pick_a_Choice')
-        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'QFIL_need')
+        choice(choices: ['Yes', 'No'], description: 'What is your choice?', name: 'Smoke_available')
+        choice(choices: ['No', 'Yes'], description: 'What is your choice?', name: 'QFIL_need')
 }
 triggers {
         pollSCM 'H/2 * * * *'
 }
-        stages {
+  stages {
+        stage('Kernel_manifest') {
+                steps {
+                    dir('kernel_sync') {
+                        checkout([$class: 'RepoScm', forceSync: true, manifestBranch: 'mcdt_QCS8250_LA2.0_kp', manifestFile: 'default.xml', manifestRepositoryUrl: 'ssh://cdgerrit.innominds.com:29418/imrepo/android/platform/manifest.git'])
+                    }
+                }
+            }
+        stage('Qssi_manifest') {
+                steps {
+                    dir('qssi_sync') {
+                       checkout([$class: 'RepoScm', forceSync: true, manifestBranch: 'mcdt_QCS8250_LA2.0_qssi', manifestFile: 'default.xml', manifestRepositoryUrl: 'ssh://cdgerrit.innominds.com:29418/imrepo/android/platform/manifest.git'])
+                                           }
+                }
+            }
+        stage('Vendor_manifest') {
+                steps {
+                    dir('vendor_sync') {
+                      checkout([$class: 'RepoScm', forceSync: true, manifestBranch: 'mcdt_QCS8250_LA2.0_vendor', manifestFile: 'default.xml', manifestRepositoryUrl: 'ssh://cdgerrit.innominds.com:29418/imrepo/android/platform/manifest.git'])
+                                           }
+                }
+            }
         stage('Platform') {
             steps {
-                sh """
+                sh '''
                 sh 'echo $WORKSPACE'
-                if [ -d builds ]
-                then
-                    cd builds
-                    git pull
-                else
-                    git clone ssh://cdgerrit.innominds.com:29418/imrepo/android/tools/builds -b bt_qcs8250_LA2.0
-                    cd builds
-                fi
                 echo "export PERMA_PATH=$WORKSPACE/builds/" >$WORKSPACE/downstream.sh
                 cd $WORSKPACE
                 scp builduser@scmcdim:$PERMA_PATH/permalinks .
@@ -157,14 +170,14 @@ triggers {
 
                 echo "export QFIL_need=$QFIL_need"  >>$WORKSPACE/downstream.sh
 
-                echo "export Smoke_available="$Pick_a_Choice"  >>$WORKSPACE/downstream.sh
+                echo "export Smoke_available="$Smoke_available"  >>$WORKSPACE/downstream.sh
 
                 echo "export BUILD_ID_NAME=$BUILD_ID_NAME"  >>$WORKSPACE/downstream.sh
 
                 echo "export kversion=$kversion"  >>$WORKSPACE/downstream.sh
 
                 echo "export LAST_SUCCESSFUL_BUILD=$LAST_SUCCESSFUL_BUILD"  >>$WORKSPACE/downstream.sh
-                """
+                '''
             }
         }
         stage('Variable_Test') {
