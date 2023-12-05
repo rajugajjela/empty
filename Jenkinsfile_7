@@ -2,7 +2,7 @@ pipeline {
 agent {
         node {
             label 'ponderous2'
-            customWorkspace '/home/people/jenkin-jobs/AU_Platform_build_la2.0'
+            customWorkspace '/home/people/jenkin-jobs/AU_Platform_build_LA2.0'
         }
 }
 parameters {
@@ -38,7 +38,7 @@ triggers {
             steps {
                 sh '''
                 sh 'echo $WORKSPACE'
-                echo "export PERMA_PATH=$WORKSPACE/builds/" >$WORKSPACE/downstream.sh
+                echo "export PERMA_PATH=/var/lib/jenkins/jobs/AU_Platform_build_LA2.0/builds/" >$WORKSPACE/downstream.sh
                 cd $WORSKPACE
                 scp builduser@scmcdim:$PERMA_PATH/permalinks .
 
